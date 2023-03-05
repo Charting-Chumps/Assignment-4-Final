@@ -8,7 +8,7 @@ output:
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
-
+library(plotly)
 ```
 
 Column {data-width=650}
@@ -19,7 +19,8 @@ Column {data-width=650}
 ### Chart A
 
 ```{r}
-readRDS("map.rds")
+p <- import("map.rds")
+ggplotly(p)
 ```
 
 
@@ -29,12 +30,17 @@ Column {data-width=350}
 ### Chart B
 
 ```{r}
-readRDS("plot4.rds")
+p1 <- import("plot4.rds")
+ggplotly(p1)
+
 ```
 
 ### Chart C
 
 ```{r}
-readRDS("plot6.rds")
+p2 <- import("plot6.rds")
+ggplotly(p2)
+
+
 ```
 
