@@ -28,7 +28,7 @@ base=ggplot(data = df1,
                 y = gap))
 plot1=base + geom_bar(fill = "black",
                       stat = 'identity') + 
-      labs(title="Fewer 6th graders were enrolled in Washington State public schools after the Covid-19 Pandemic",
+      labs(#title="Fewer 6th graders were enrolled in Washington State public schools after the Covid-19 Pandemic",
                      x ="School Year", 
                      y = "Change in number of 6th graders since 2014",
                      caption = "Source: Washington State Department of Education") + 
@@ -65,8 +65,8 @@ base=ggplot(data=df2.0,
                 y = Percent_of_all_students,
                 fill = reorder(Race_Ethnicity,Percent_of_all_students)))
 plot2.1 = base + geom_bar(stat = 'identity',
-                      position = 'stack') + 
-      labs(title="Washington public schools are increasingly home to students of color",
+                      position = 'stack') #+ 
+      labs(#title="Washington public schools are increasingly home to students of color",
                      x ="School Year", 
                      y = "Students",
                      caption = "Source: Washington State Department of Education") + 
@@ -79,8 +79,9 @@ plot2.2 = plot2.1 + geom_hline(yintercept = 0.5,
                            alpha=0.7,
                            color = "black", 
                            linetype = "dashed") + 
-                theme(axis.text.x = element_text(angle = -30, hjust = 0.5))
-plot_2_final = ggplotly(plot2.2, tooltip = c("x", "y"))
+                theme(axis.text.x = element_text(angle = -30, hjust = 0.5)) 
+plot2.3 = plot2.2 + scale_fill_discrete(name = "Race/Ethnicity")
+plot_2_final = ggplotly(plot2.3, tooltip = c("x", "y"))
 saveRDS(ggplotly(plot_2_final), file = "Plot2.rds")
 ```
 
@@ -92,7 +93,7 @@ df3 = read.csv("Plot3_data.csv")
 map = plot_usmap(data = df3, values = "mean.StudentToTeacherRatio.", include = "WA") +
 #low = low number of students per teacher & high = high number of students per teacher 
   scale_fill_continuous(low = "green", high = "red", name = "# of students per teacher") + 
-  labs(title = "Average District Student-to-Teacher Ratio across different WA Counties") +
+#  labs(title = "Average District Student-to-Teacher Ratio across different WA Counties") +
   theme(legend.position = "right")
 
 saveRDS(ggplotly(map), file = "Plot3.rds")
