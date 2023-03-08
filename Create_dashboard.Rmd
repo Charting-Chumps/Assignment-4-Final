@@ -13,7 +13,7 @@ library(flexdashboard)
 Column {data-width=600}
 -----------------------------------------------------------------------
 
-### Chart A
+### Average District Student-to-Teacher Ratio across different WA Counties
 
 ```{r}
 readRDS("Plot3.rds")
@@ -22,13 +22,13 @@ readRDS("Plot3.rds")
 Column {data-width=400}
 -----------------------------------------------------------------------
 
-### Chart B
+### Fewer 6th graders were enrolled in Washington State public schools after the Covid-19 Pandemic
 
 ```{r}
 readRDS("Plot1.rds")
 ```
 
-### Chart C
+### Washington public schools are increasingly home to students of color
 
 ```{r}
 readRDS("Plot2.rds")
