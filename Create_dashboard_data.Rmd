@@ -1,0 +1,69 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Packages
+```{r}
+rm(list = ls())
+library(tidyverse)
+library(ggplot2)
+library(scales)
+library(ggthemes)
+library(magrittr)
+library(rio)
+library(pivottabler)
+library(ggrepel)
+library(flexdashboard)
+```
+
+Plot 1 data
+```{r, message=FALSE,echo=FALSE,results='hide',warning=FALSE}
+df1 = read.csv('https://raw.githubusercontent.com/alyssatn/RWorkshopHW/main/Report_Card_Enrollment_from_2014-15_to_Current_Year.csv')
+
+df6=df1[df1$Gradelevel=="6th Grade",]
+df6$All.Students=gsub(pattern = ',', replacement = "",df6$All.Students)
+df6$All.Students=as.numeric(df6$All.Students)
+df6$gap = df6$All.Students-78603
+df6$gap_lead = 100 * (df6$All.Students - lead(df6$All.Students))/lead(df6$All.Students)
+df6$PositiveGap=ifelse(df6$gap_lead > 0,"Yes","No")
+df6$PositiveGap=as.character(df6$PositiveGap) #I don't know if this matters but I have it here anyway
+df6[8,38] = "No" #manually updating the data for the 2014-2015 year
+df6[8,36] = 0 #manually updating the data for the 2014-2015 year
+df6$xlabel = c(7.8,6.8,5.3,4.3,3.3,2.3,1.3,2)#X coordinates for the line segment labels
+df6$ylabel = c(5273 - ((5273 - 2135)/2), 9606 - (9606 - 5273)/2, 8643 - (8643 - 9606)/2, 8643 - (8643 - 5632)/2,5632 - (5632-2707)/2, 2707 - (2702-1415)/2,(1415/2), 600)#Y coordinates for the line segment labels
+df6$label = c(2135-5273, 5273 - 9096, 9096 - 8643, 8643 - 5632, 5632 - 2707, 2707 - 1415, 1415, 0)
+write.csv(df6,"Plot1_data.csv")
+```
+
+Plot 2 data
+```{r}
+link = "https://github.com/Charting-Chumps/Data/raw/main/Race_Enrollment.csv"
+df2 = as.data.frame(import(link))
+
+df2=as.data.frame(df2)
+df2$Race=as.factor(df2$Race)
+df2$SchoolYear=as.factor(df2$SchoolYear)
+df2$Total=as.integer(df2$Total)
+df2$YearTotal = c(1091355, 1091355, 1091355, 1091355, 1091355, 1091355, 1091355, 1088758, 1088758, 1088758, 1088758, 1088758, 1088758, 1088758, 1140997, 1140997, 1140997, 1140997, 1140997, 1140997, 1140997, 1133507, 1133507, 1133507, 1133507, 1133507, 1133507, 1133507, 1126191, 1126191, 1126191, 1126191, 1126191, 1126191, 1126191, 1113069, 1113069, 1113069, 1113069, 1113069, 1113069, 1113069, 1096921, 1096921, 1096921, 1096921, 1096921, 1096921, 1096921, 1082279, 1082279, 1082279, 1082279, 1082279, 1082279, 1082279)
+df2$PctTotalYear = round(df2$Total / df2$YearTotal,3)
+names(df2)=c('School_Year','Race_Ethnicity','Students','Total_students','Percent_of_all_students')
+write.csv(df2,"Plot2_data.csv")
+```
+
+Plot 3 data
+```{r}
+df3 <- read.csv("https://github.com/Charting-Chumps/Data/raw/main/2020_2021_Washington_Public_Schools_Student_Teacher_Ratio.csv")
+df3.5 <- read.csv("https://github.com/Charting-Chumps/Data/raw/main/geographic_codes.csv")
+
+STRmean = mean(df3$StudentToTeacherRatio)
+WeightedSTRmean = sum(df3$TotalStudentCount) / sum(df3$TotalTeacherCount)
+names(df3.5)[1] <- 'County'
+names(df3.5)[3] <- "fips"
+waMapSchool <- left_join(df3, df3.5, by = "County")
+#Find average district Student to Teacher ratio and group in each County
+waMapSchool2 <- waMapSchool %>%
+  group_by(County) %>%
+#find average Student to teacher ratio   
+  mutate(mean(StudentToTeacherRatio)) %>% write.csv("Plot3_data.csv")
+```
