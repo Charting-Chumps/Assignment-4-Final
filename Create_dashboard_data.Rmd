@@ -55,15 +55,12 @@ Plot 3 data
 ```{r}
 df3 <- read.csv("https://github.com/Charting-Chumps/Data/raw/main/2020_2021_Washington_Public_Schools_Student_Teacher_Ratio.csv")
 df3.5 <- read.csv("https://github.com/Charting-Chumps/Data/raw/main/geographic_codes.csv")
-
-STRmean = mean(df3$StudentToTeacherRatio)
-WeightedSTRmean = sum(df3$TotalStudentCount) / sum(df3$TotalTeacherCount)
 names(df3.5)[1] <- 'County'
 names(df3.5)[3] <- "fips"
 waMapSchool <- left_join(df3, df3.5, by = "County")
 #Find average district Student to Teacher ratio and group in each County
 waMapSchool2 <- waMapSchool %>%
-  group_by(County) %>%
-#find average Student to teacher ratio   
-  mutate(mean(StudentToTeacherRatio)) %>% write.csv("Plot3_data.csv")
+  group_by(County) %>% 
+  mutate(Average_Student_to_Teacher_ratio = round(mean(StudentToTeacherRatio),2)) %>%
+  write.csv("Plot3_data.csv")
 ```

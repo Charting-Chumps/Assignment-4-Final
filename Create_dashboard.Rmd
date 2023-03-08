@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "Washington primary education students"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
@@ -10,7 +10,7 @@ output:
 library(flexdashboard)
 ```
 
-Column {data-width=600}
+Column {data-width=500}
 -----------------------------------------------------------------------
 
 ### Average District Student-to-Teacher Ratio across different WA Counties
@@ -19,7 +19,7 @@ Column {data-width=600}
 readRDS("Plot3.rds")
 ```
 
-Column {data-width=400}
+Column {data-width=500}
 -----------------------------------------------------------------------
 
 ### Fewer 6th graders were enrolled in Washington State public schools after the Covid-19 Pandemic
@@ -33,4 +33,3 @@ readRDS("Plot1.rds")
 ```{r}
 readRDS("Plot2.rds")
 ```
-
