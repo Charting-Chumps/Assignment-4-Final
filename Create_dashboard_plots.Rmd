@@ -94,7 +94,7 @@ map = plot_usmap(data = df3, values = "mean.StudentToTeacherRatio.", include = "
 #low = low number of students per teacher & high = high number of students per teacher 
   scale_fill_continuous(low = "green", high = "red", name = "# of students per teacher") + 
 #  labs(title = "Average District Student-to-Teacher Ratio across different WA Counties") +
-  theme(legend.position = "right")
+  theme(legend.position = "bottom") 
 
 saveRDS(ggplotly(map), file = "Plot3.rds")
 ```
